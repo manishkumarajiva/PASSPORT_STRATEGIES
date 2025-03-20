@@ -1,0 +1,32 @@
+{
+  "name": "passport_strategies",
+  "version": "1.0.0",
+  "description": "passport authentication",
+  "main": "server.js",
+  "scripts": {
+    "test": "nodemon /src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manishkumarajiva/PASSPORT_STRATEGIES.git"
+  },
+  "keywords": [
+    "google",
+    "facebook",
+    "local",
+    "jwt"
+  ],
+  "author": "manish dhiman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/manishkumarajiva/PASSPORT_STRATEGIES/issues"
+  },
+  "homepage": "https://github.com/manishkumarajiva/PASSPORT_STRATEGIES#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.9",
+    "passport": "^0.7.0"
+  }
+}
