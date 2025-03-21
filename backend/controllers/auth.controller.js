@@ -31,11 +31,11 @@ const SignUp = asyncHandler( async(req, res) => {
         }
 
 
-        if(!createUser) return res.status(400).json({ status : 200, success : false, message : 'Failed to signup'});
+        if(!createOrUpdate) return res.status(400).json({ status : 200, success : false, message : 'Failed to signup'});
 
-        req.login(createUser, function(err) {
+        req.login(createOrUpdate, function(err) {
             if (err) return res.status(500).json({status : 500, success : false, message : 'Session Failed'});
-            res.status(201).json({ status : 201, success : true, message : 'Successfully SignUp', data : createUser });
+            res.status(201).json({ status : 201, success : true, message : 'Successfully SignUp', data : createOrUpdate });
         });
     
     });
