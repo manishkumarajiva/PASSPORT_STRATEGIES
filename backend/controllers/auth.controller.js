@@ -9,18 +9,26 @@ const SignUp = asyncHandler( async(req, res) => {
     
     const isExist = await UserModel.findOne({ username : username });
 
-    if(isExist) return res.status(400).json({ status : 200, success : false, message : 'Already Exist'});
-
     const salt = crypto.randomBytes(16);
 
     crypto.pbkdf2(password, salt, 310000, 32, 'sha256', async (err, hashedPassword) => {
         if (err) { return next(err); }
         
-        const createUser = await UserModel.create({
-            username : username,
-            password : hashedPassword,
-            salt : salt
-        });
+        var createOrUpdate;
+
+        if(!isExist){
+            createOrUpdate = await UserModel.create({
+                username : username,
+                password : hashedPassword,
+                salt : salt
+            });
+        }else{
+            createOrUpdate = await UserModel.findOneAndUpdate(
+                {username : username},
+                { password : hashedPassword, salt : salt },
+                { new : true }
+            );
+        }
 
 
         if(!createUser) return res.status(400).json({ status : 200, success : false, message : 'Failed to signup'});
@@ -36,13 +44,12 @@ const SignUp = asyncHandler( async(req, res) => {
 
 
 const SignIn = asyncHandler(async (req, res) => {
-    console.log(req.user,'000')
-    // const token = await AccessToken(req.user);
+    const token = await AccessToken(req.user);
 
-    // req.login(req.user, (err) => {
-    //     if (err) return res.status(500).json({status : 500, success : false, message : 'Session Failed'});
-    //     res.status(200).json({status : 200, success : true, message : 'Successfully Login', data : req.user, token : token });
-    // })
+    req.login(req.user, (err) => {
+        if (err) return res.status(500).json({status : 500, success : false, message : 'Session Failed'});
+        res.status(200).json({status : 200, success : true, message : 'Successfully Login', data : req.user, token : token });
+    })
 });
 
 

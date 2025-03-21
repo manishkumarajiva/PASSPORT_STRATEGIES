@@ -1,7 +1,7 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const UserModel = require('../models/user.model.js');
-const sanitizeUser = require('../helper/sanitizeUser.helper.js');
+const sanitizeUser = require('../helper/sanitization.helper.js');
 
 /** 
  * @jwt strategy

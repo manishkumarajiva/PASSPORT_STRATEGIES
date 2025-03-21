@@ -1,7 +1,7 @@
 const LocalStrategy = require('passport-local');
 const UserModel = require('../models/user.model.js');
 const crypto = require('crypto');
-const sanitizeUser = require('../helper/sanitizeUser.helper.js');
+const {sanitizeUser} = require('../helper/sanitization.helper.js');
 
 
 const PassportLocalStrategy = new LocalStrategy(async function verify(username, password, cb) {
