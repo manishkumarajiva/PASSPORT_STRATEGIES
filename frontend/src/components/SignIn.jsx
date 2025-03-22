@@ -28,17 +28,7 @@ const SignIn = () => {
 
   const Google = async () => {
     try {
-      const options = {
-        method : 'GET',
-        headers : { 'Content-Type' : 'application-json' }
-      }
-
-      const response = await fetch('http://localhost:8000/api/auth/google-signin', options);
-      if(response.ok){
-        const user = await response.json();
-        alert(JSON.stringify(user));
-        reset();
-      }
+      window.location.href = 'http://localhost:8000/api/auth/google-signin';
     } catch (error) {
       console.log('ERROR DURING GOOGLE SIGNUP')
     }
@@ -48,6 +38,7 @@ const SignIn = () => {
     <section className="parent">
       {/* local login form [email, password] */}
       <section className="login-form-container">
+        <h1> Login </h1>
         <form noValidate onSubmit={handleSubmit(Local)} className="signin-form">
           <section className="form-control">
             <label htmlFor="username"> Username </label>

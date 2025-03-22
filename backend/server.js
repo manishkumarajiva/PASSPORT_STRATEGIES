@@ -46,6 +46,7 @@ app.get('/', (req, res) => {
 
 
 app.use('/api/auth', IndexRoutes);
+app.use('/api/user', IndexRoutes); // testing 
 
 const HttpServer = http.createServer(app);
 HttpServer.listen(PORT, () => console.log(`Server listening on Port ${PORT}`));

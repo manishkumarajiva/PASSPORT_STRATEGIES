@@ -4,34 +4,28 @@ const crypto = require('crypto');
 const AccessToken = require('../helper/authToken.helper.js');
 const { sanitizeUser } = require('../helper/sanitization.helper.js');
 
+const mongoose = require('mongoose');
+
 
 const SignIn = asyncHandler( async(req, res) => {
     
     const user = sanitizeUser(req.user);
     const token = await AccessToken(user);
 
-    req.login(user, (err) => {
-        if (err) return res.status(500).json({status : 500, success : false, message : 'Session Failed'});
-        res.status(200).json({status : 200, success : true, message : 'Successfully Login', data : user, token : token });
-    })
+    res.redirect(`http://localhost:5173/success?token=${token}&id=${user}`);
 });
 
-
-
-
-const GetUser = asyncHandler(async(req, res) => {
-    const user = await UserModel.findById(req.user.id).select('-password -salt');
-    if(!user) return res.status(200).json({ status : 400, status : false, message : 'User Not Found'});
-    res.status(200).json({ status : 200, success : true, message : 'Successfully Fetch', data : user });
-});
 
 
 const UserProfile = asyncHandler(async(req, res) => {
-    res.status(200).json({status : 200, success : true, data : req.user})
+    console.log('i am reaching here ppp')
+    const user = await UserModel.findById(mongoose.Types.ObjectId(req.user.id)).select('-password -salt');
+    if(!user) return res.status(200).json({ status : 400, status : false, message : 'User Not Found'});
+    res.status(200).json({ status : 200, success : true, message : 'User Profile', data : user });
 })
 
 
 
-module.exports = { SignIn, GetUser, UserProfile }
+module.exports = { SignIn, UserProfile }
 
 

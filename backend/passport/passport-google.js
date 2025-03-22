@@ -21,8 +21,9 @@ const PassportGoogleStrategy = new GoogleStrategy(
         return done(null, sanitizeUser(createUser));
 
       } else if(!userExist.googleId) {
+
         const updateUser = await UserModel.findOneAndUpdate(
-          { username : username }, 
+          { username : userExist.username }, 
           {
             name: data.name,
             picture: data.picture,
@@ -39,6 +40,7 @@ const PassportGoogleStrategy = new GoogleStrategy(
         return done(null, userExist)
       }
     } catch (error) {
+      console.log('ERROR DURING GOOGLE - ', error)
       return done(error);
     }
   }

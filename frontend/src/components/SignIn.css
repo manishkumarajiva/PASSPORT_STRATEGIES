@@ -8,6 +8,10 @@
         @apply  bg-black sm:w-full md:w-1/3 rounded-md p-4 shadow-md shadow-cyan-300
     }
 
+    .login-form-container > h1 {
+        @apply text-cyan-400 text-center tracking-widest font-extrabold text-lg
+    }
+
     .signin-form > .form-control {
         @apply flex flex-col my-2
     }

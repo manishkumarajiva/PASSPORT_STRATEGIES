@@ -1,8 +1,4 @@
-exports.sanitizeUser = (user) => ({
-  id: user._id,
-  username: user.username,
-  name: user.name
-});
+exports.sanitizeUser = (user) => (user._id);
 
 
 exports.sanitizeGoogleJson = async (google) => {
