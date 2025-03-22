@@ -3,9 +3,9 @@ const JWT = require('jsonwebtoken');
 const AccessToken = async (user) => {
     try {
         const payload = {
-            id : user?.id,
-            email : user?.email,
-            role : user?.role
+            id : user.id,
+            username : user.username,
+            role : user.role ?? 'USER'
         }
 
         const options = {

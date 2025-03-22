@@ -37,7 +37,7 @@
     }
 
     .social-login > button {
-        @apply text-center px-2 rounded-md p-1 text-sm text-white
+        @apply text-center rounded-md p-1.5 text-sm text-white
     }
 
     .social-login > .google {
