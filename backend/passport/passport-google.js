@@ -1,6 +1,6 @@
 const GoogleStrategy = require("passport-google-oauth20");
 const UserModel = require("../models/user.model.js");
-const { sanitizeGoogleJson } = require("../helper/sanitization.helper.js");
+const { sanitizeGoogleJson, sanitizeUser } = require("../helper/sanitization.helper.js");
 
 const PassportGoogleStrategy = new GoogleStrategy(
   {
@@ -13,23 +13,30 @@ const PassportGoogleStrategy = new GoogleStrategy(
     try {
       const data = await sanitizeGoogleJson(profile);
 
-      const userExist = await UserModel.findOne({
-        $and: [{ googleId: data.googleId }, { username: data.username }],
-      });
+      const userExist = await UserModel.findOne({ username: data.username });
 
-      if (userExist) {
-        return done(null, userExist);
-      } else {
-        const createUser = await UserModel.create({
-          name: data.name,
-          picture: data.picture,
-          googleId: data.googleId,
-          username: data.username,
-        });
+      if(!userExist){
+        const createUser = await UserModel.create(data)
+        if(!createUser) return done(null, false, {message : 'failed to create'});
+        return done(null, sanitizeUser(createUser));
 
-        if (!createUser) return done(null, false);
+      } else if(!userExist.googleId) {
+        const updateUser = await UserModel.findOneAndUpdate(
+          { username : username }, 
+          {
+            name: data.name,
+            picture: data.picture,
+            googleId: data.googleId,
+            username: data.username,
+          },
+          { new : true }
+        );
 
-        return done(null, createUser);
+        if (!updateUser) return done(null, false);
+        return done(null, updateUser);
+
+      }else {
+        return done(null, userExist)
       }
     } catch (error) {
       return done(error);

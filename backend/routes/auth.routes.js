@@ -2,10 +2,21 @@ const { Router } = require('express');
 const router = Router();
 const passport = require('passport');
 
-const { SignUp, SignIn, GetUser, UserProfile } = require('../controllers/auth.controller.js');
+const { SignIn, GetUser, UserProfile } = require('../controllers/auth.controller.js');
 
-router.post('/signup', SignUp);
-router.post('/signin', passport.authenticate('local', { session : false }), SignIn);
+/** @Local Authentication */
+router.post('/local-signin', passport.authenticate('local', { session : false }), SignIn);
+
+/** @Google Authentication */
+router.get('/google-signin', passport.authenticate('google', { session : false }));
+router.get('/google/callback', passport.authenticate('google', { session : false }), SignIn)
+
+
+
+
+
+
+
 
 // Two way for authorization
 
@@ -27,12 +38,6 @@ router.get('/get',(req, res, done) => {
 
 router.get('/profile', passport.authenticate('jwt', { session : false }), UserProfile);
 
-
-
-
-/** @Google Authentication */
-router.get('/google/login', passport.authenticate('google', { session : false }));
-router.get('/google/callback', passport.authenticate('google', { session : false }), SignIn)
 
 
 module.exports = router;

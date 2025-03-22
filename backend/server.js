@@ -17,14 +17,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : true }));
 
 
-app.use(cors({
-    origin : 'http://localhost:8000/',
-    methods : ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    credentials : true,
-    allowedHeaders : ['Content-Type', 'Authorization', 'X-Origin'],
-    preflightContinue : false,
-    optionsSuccessStatus : 204
-}))
+// app.use(cors({
+//     origin : 'http://localhost:5173/',
+//     methods : ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+//     credentials : true,
+//     allowedHeaders : ['Content-Type', 'Authorization', 'X-Origin'],
+//     preflightContinue : false,
+//     optionsSuccessStatus : 204
+// }))
+
+app.use(cors('*'))
 
 
 app.use(expressSession({
@@ -43,7 +45,6 @@ app.get('/', (req, res) => {
 
 
 
-app.use('/api/user', IndexRoutes);
 app.use('/api/auth', IndexRoutes);
 
 const HttpServer = http.createServer(app);
