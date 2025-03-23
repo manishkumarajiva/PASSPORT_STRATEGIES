@@ -4,13 +4,18 @@ const AccessToken = require('../helper/authToken.helper.js');
 const { sanitizeUser } = require('../helper/sanitization.helper.js');
 
 
-const SignIn = asyncHandler( async(req, res) => {
-    const user = sanitizeUser(req.user);
-    const token = await AccessToken(user);
-
-    res.redirect(`http://localhost:5173/success?token=${token}&id=${user.id}`);
+const LocalSignIn = asyncHandler( async(req, res) => {
+    const token = await AccessToken(req.user);
+    req.login(req.user, function(err){
+        if(err) return next(err);
+        res.status(200).json({status : 200, success : true, message : 'Successfully Login', data : req.user, token})
+    })
 });
 
+const GoogleSignIn = asyncHandler( async(req, res) => {
+    const token = await AccessToken(req.user);
+    res.redirect(`http://localhost:5173/success?token=${token}&id=${req.user.id}`);
+});
 
 
 const UserProfile = asyncHandler(async(req, res) => {
@@ -21,6 +26,6 @@ const UserProfile = asyncHandler(async(req, res) => {
 
 
 
-module.exports = { SignIn, UserProfile }
+module.exports = { LocalSignIn, GoogleSignIn, UserProfile }
 
 

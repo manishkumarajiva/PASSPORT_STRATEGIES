@@ -34,10 +34,10 @@ const PassportGoogleStrategy = new GoogleStrategy(
         );
 
         if (!updateUser) return done(null, false);
-        return done(null, updateUser);
+        return done(null, sanitizeUser(updateUser));
 
       }else {
-        return done(null, userExist)
+        return done(null, sanitizeUser(userExist))
       }
     } catch (error) {
       console.log('ERROR DURING GOOGLE - ', error)

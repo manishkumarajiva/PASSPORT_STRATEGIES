@@ -1,11 +1,13 @@
 import React from "react";
 import { useForm, } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
+import { useNavigate } from "react-router";
 
 const SignIn = () => {
   const { register, handleSubmit, formState, reset, control } = useForm();
   const { errors } = formState;
 
+  const navigate = useNavigate();
 
   const Local = async (data) => {
    try {
@@ -17,8 +19,9 @@ const SignIn = () => {
     const response = await fetch('http://localhost:8000/api/auth/local-signin', options);
     if(response.ok){
       const user = await response.json();
-      alert(JSON.stringify(user));
-      reset()
+      reset();
+      localStorage.setItem('token', user.token)
+      navigate('/dashboard')
     }
    } catch (error) {
     console.log('ERROR DURING LOCAL SIGNUP')

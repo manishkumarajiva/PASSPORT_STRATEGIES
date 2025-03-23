@@ -1,6 +1,8 @@
 exports.sanitizeUser = (user) => ({
   id: user._id,
   username: user.username,
+  name: user.name,
+  picture : user.picture
 });
 
 exports.sanitizeGoogleJson = async (google) => {

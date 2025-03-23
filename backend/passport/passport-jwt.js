@@ -1,7 +1,6 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const UserModel = require('../models/user.model.js');
-const {sanitizeUser} = require('../helper/sanitization.helper.js');
 
 /** 
  * @jwt strategy
@@ -18,7 +17,7 @@ const PassportJWTStrategy =  new JwtStrategy(opts, async (jwt_payload, done) => 
    const user = await UserModel.findById({ _id : jwt_payload.id });
 
    if(!user) return done(null, false);
-   return done(null, sanitizeUser(user))
+   return done(null, user)
 });
 
 
