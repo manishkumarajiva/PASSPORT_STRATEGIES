@@ -1,2 +1,5 @@
 # PASSPORT STRATEGIES
 MERN STACK PASSPORT STRATEGIES
+
+>Passort Local
+>Passport-google-auth20
